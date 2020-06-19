@@ -9,11 +9,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let item of feed; let i = index;">
+        <tr *ngFor="let item of feed;" >
+          <ng-container *ngIf="item.isVisible">
+          <td>{{item.num_comments}}</td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td><div class="upVoteIcon"></div></td>
+          <td>
+            <div class="newsDetails"><div (click)="openUrl(item.story_url)">{{item.story_title}} </div>
+            &nbsp;
+            <small class="subTextLight"> ({{item.hostname}}) by <span class="subTextBold">{{item.author}} </span>
+            {{item.created_at}} [ <span class="subTextBold" (click)="onHideClick(item)">hide</span> ]</small></div>
+          </td>
+        </ng-container>
         </tr>
       </tbody>
     </table>

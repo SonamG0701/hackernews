@@ -1,3 +1,29 @@
 .tbheader {
     background-color: orange;
 }
+
+.upVoteIcon {
+    width:      10px;
+    height:     20px;
+    border:     0px;    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  
+    background: url("../../assets/grayarrow.gif") no-repeat;
+}
+
+.newsDetails {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.subTextBold {
+    color: black;
+    font-weight: 600;
+}
+
+.subTextLight {
+    color: #828282;
+}
