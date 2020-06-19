@@ -12,8 +12,8 @@
         <tr *ngFor="let item of feed;" >
           <ng-container *ngIf="item.isVisible">
           <td>{{item.num_comments}}</td>
-          <td></td>
-          <td><div class="upVoteIcon"></div></td>
+          <td>{{item.upVote}}</td>
+          <td><div class="upVoteIcon" (click)="onUpVoteClick(item)"></div></td>
           <td>
             <div class="newsDetails"><div (click)="openUrl(item.story_url)">{{item.story_title}} </div>
             &nbsp;

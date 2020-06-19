@@ -71,9 +71,9 @@ export class NewsbulletinComponent implements OnInit {
   }
 
   onPrevClick() {
-    this.router.navigate(['/topStories'], {
+    this.router.navigate(['/topstories'], {
       queryParams: {
-        page: Math.max(1, this.page + 1)
+        page: Math.max(1, this.page - 1)
       }
     });
   }
@@ -84,6 +84,13 @@ export class NewsbulletinComponent implements OnInit {
         page: Math.min(this.totalPages, this.page + 1)
       }
     });
+  }
+
+  onUpVoteClick(item) {
+    let upVote = item.upVote;
+    if(upVote == undefined)
+      upVote = 0;
+    item.upVote = upVote + 1;
   }
 
 }

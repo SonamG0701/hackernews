@@ -12,5 +12,6 @@ export interface NewsItems {
     story_url: string,
     num_comments:Number,
     isVisible: boolean,
-    hostname:string
+    hostname:string,
+    upVote: Number
 }
