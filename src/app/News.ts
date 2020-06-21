@@ -15,3 +15,8 @@ export interface NewsItems {
     hostname:string,
     upVote: Number
 }
+
+export interface upVote {
+    upVoteCount: Number;
+    story_id:Number;
+}

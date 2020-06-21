@@ -1,9 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
 import { HackernewsService } from '../services/hackernews.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import * as moment from 'moment';
 import { News, NewsItems } from '../News';
+import {UpVoteService} from '../services/up-vote.service';
 
 @Component({
   selector: 'app-newsbulletin',
@@ -17,17 +18,21 @@ export class NewsbulletinComponent implements OnInit {
   public totalPages: number;
   public feed: NewsItems[];
   private subscription: any;
-
-
+  public upVotes:[];
+  public upVotesLabel:[];
+  
   constructor(
     private cdRef: ChangeDetectorRef, private route: ActivatedRoute,
     private router: Router,
-    private _api: HackernewsService) {
+    private _api: HackernewsService,
+    private upVoteService: UpVoteService) {
 
   }
 
   ngOnInit() {
+    caches.delete('app-cache');
 
+    const cache =  caches.open('app-cache');
     this.subscription = this.route.queryParams.
       pipe(
         switchMap(params => {
@@ -43,9 +48,13 @@ export class NewsbulletinComponent implements OnInit {
         this.feed.forEach(function (f) {
           f.isVisible = true;
           f.created_at = moment.unix(new Date(f.created_at).getTime() / 1000).fromNow();
-          f.hostname = this.extractHostname(f.story_url);
-        }, this)
-        console.log(this.feed);
+          f.hostname = this.extractHostname(f.story_url);          
+          f.upVote =0;
+        }, this)                
+        
+        //add UpVote data
+        this.feed = this.upVoteService.addUpVotes(this.feed, this.page);     
+        console.log(this.feed);   
       })
 
   }
@@ -76,6 +85,7 @@ export class NewsbulletinComponent implements OnInit {
         page: Math.max(1, this.page - 1)
       }
     });
+    this.page = Math.max(1, this.page - 1);
   }
 
   onNextClick() {
@@ -84,6 +94,7 @@ export class NewsbulletinComponent implements OnInit {
         page: Math.min(this.totalPages, this.page + 1)
       }
     });
+    this.page = Math.min(this.totalPages, this.page + 1);
   }
 
   onUpVoteClick(item) {
@@ -91,6 +102,8 @@ export class NewsbulletinComponent implements OnInit {
     if(upVote == undefined)
       upVote = 0;
     item.upVote = upVote + 1;
+    
+    this.upVoteService.updateUpVote(item, this.page);
   }
 
 }
