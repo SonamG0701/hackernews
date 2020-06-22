@@ -20,6 +20,7 @@ export class NewsbulletinComponent implements OnInit {
   private subscription: any;
   public upVotes:[];
   public upVotesLabel:[];
+  public clickNumber:number = 0;
   
   constructor(
     private cdRef: ChangeDetectorRef, private route: ActivatedRoute,
@@ -35,10 +36,8 @@ export class NewsbulletinComponent implements OnInit {
     const cache =  caches.open('app-cache');
     this.subscription = this.route.queryParams.
       pipe(
-        switchMap(params => {
-          console.log(params.page);
-          this.page = +params.page || 1;
-          console.log(this.page);
+        switchMap(params => {          
+          this.page = +params.page || 1;          
           return this._api.getFeed(this.page)
         })
       ).
@@ -53,8 +52,7 @@ export class NewsbulletinComponent implements OnInit {
         }, this)                
         
         //add UpVote data
-        this.feed = this.upVoteService.addUpVotes(this.feed, this.page);     
-        console.log(this.feed);   
+        this.feed = this.upVoteService.addUpVotes(this.feed, this.page);                     
       })
 
   }
@@ -104,6 +102,7 @@ export class NewsbulletinComponent implements OnInit {
     item.upVote = upVote + 1;
     
     this.upVoteService.updateUpVote(item, this.page);
+    this.clickNumber = this.clickNumber + 1;
   }
 
 }
