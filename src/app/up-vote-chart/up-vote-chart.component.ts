@@ -25,7 +25,8 @@ export class UpVoteChartComponent implements OnInit, OnChanges {
         },
         scaleLabel: {
           display: true,
-          labelString: 'ID'
+          labelString: 'ID',
+          fontStyle: "600"
         },
         ticks: {
           beginAtZero: true,          
@@ -34,7 +35,8 @@ export class UpVoteChartComponent implements OnInit, OnChanges {
       yAxes: [{        
         scaleLabel: {
           display: true,
-          labelString: 'Votes'
+          labelString: 'Votes',
+          fontStyle: "600"
         },
         ticks: {
           beginAtZero: true,
@@ -48,8 +50,8 @@ export class UpVoteChartComponent implements OnInit, OnChanges {
   lineChartColors: Color[] = [
 
     { // dark grey
-      backgroundColor: 'rgba(77,83,96,0.2)',
-      borderColor: 'rgba(77,83,96,1)',
+      backgroundColor: '#fff',
+      borderColor: 'rgba(0,102,204)',
       borderWidth: [2]
     }
   ];
@@ -79,7 +81,7 @@ export class UpVoteChartComponent implements OnInit, OnChanges {
 
     // Array of different segments in chart
     this.lineChartData = [
-      { lineTension: 0, data: upVotes, borderWidth: [2], borderDashOffset:25 }  
+      { lineTension: 0, data: upVotes, borderWidth: [2], borderDashOffset:25, pointBackgroundColor:'rgba(0,102,204)' }  
     ];
 
     this.lineChartLabels = storyIds
